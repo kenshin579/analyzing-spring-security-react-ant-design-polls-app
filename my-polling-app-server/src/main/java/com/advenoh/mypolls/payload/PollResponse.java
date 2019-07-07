@@ -16,7 +16,7 @@ public class PollResponse {
     private UserSummary createdBy;
     private Instant creationDateTime;
     private Instant expirationDateTime;
-    private Boolean isExpired;
+    private Boolean expired;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long selectedChoice;
