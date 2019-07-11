@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import './App.css';
-import {withRouter} from 'react-router-dom';
 //
 // import {getCurrentUser} from '../util/APIUtils';
 import {ACCESS_TOKEN} from '../constants';
 import LoadingIndicator from '../common/LoadingIndicator';
+import AppHeader from '../common/AppHeader';
 
 import {Layout, notification} from 'antd';
 
@@ -19,7 +19,7 @@ class App extends Component {
             isLoading: false
         }
         // this.handleLogout = this.handleLogout.bind(this);
-        // this.loadCurrentUser = this.loadCurrentUser.bind(this);
+        this.loadCurrentUser = this.loadCurrentUser.bind(this);
         // this.handleLogin = this.handleLogin.bind(this);
         //
         // notification.config({
@@ -28,27 +28,27 @@ class App extends Component {
         //     duration: 3,
         // });
     }
-    //
-    // loadCurrentUser() {
-    //     this.setState({
-    //         isLoading: true
-    //     });
-    //     getCurrentUser()
-    //         .then(response => {
-    //             this.setState({
-    //                 currentUser: response,
-    //                 isAuthenticated: true,
-    //                 isLoading: false
-    //             });
-    //         }).catch(error => {
-    //         this.setState({
-    //             isLoading: false
-    //         });
-    //     });
-    // }
+
+    loadCurrentUser() {
+        // this.setState({
+        //     isLoading: true
+        // });
+        // getCurrentUser()
+        //     .then(response => {
+        //         this.setState({
+        //             currentUser: response,
+        //             isAuthenticated: true,
+        //             isLoading: false
+        //         });
+        //     }).catch(error => {
+        //     this.setState({
+        //         isLoading: false
+        //     });
+        // });
+    }
 
     componentDidMount() {
-        // this.loadCurrentUser();
+        this.loadCurrentUser();
     }
 
     handleLogout(redirectTo = "/", notificationType = "success", description = "You're successfully logged out.") {
@@ -81,7 +81,9 @@ class App extends Component {
             return <LoadingIndicator/>
         }
         return (
-            <div>hello</div>
+            <Layout className="app-container">
+                <AppHeader/>
+            </Layout>
         );
     }
 }
