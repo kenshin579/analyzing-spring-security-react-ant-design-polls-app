@@ -1,12 +1,18 @@
 import React, {Component} from 'react';
 import './App.css';
-//
-// import {getCurrentUser} from '../util/APIUtils';
+import {Route, Switch, withRouter} from 'react-router-dom';
 import {ACCESS_TOKEN} from '../constants';
 import LoadingIndicator from '../common/LoadingIndicator';
 import AppHeader from '../common/AppHeader';
 
 import {Layout, notification} from 'antd';
+import NotFound from "../common/NotFound";
+import PollList from "../poll/PollList";
+import Login from "../user/login/Login";
+import {getCurrentUser} from "../util/APIUtils";
+import PrivateRoute from "../common/PrivateRoute";
+import NewPoll from "../poll/NewPoll";
+import Signup from "../user/signup/Signup";
 
 const {Content} = Layout;
 
@@ -18,33 +24,33 @@ class App extends Component {
             isAuthenticated: false,
             isLoading: false
         }
-        // this.handleLogout = this.handleLogout.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
         this.loadCurrentUser = this.loadCurrentUser.bind(this);
-        // this.handleLogin = this.handleLogin.bind(this);
-        //
-        // notification.config({
-        //     placement: 'topRight',
-        //     top: 70,
-        //     duration: 3,
-        // });
+        this.handleLogin = this.handleLogin.bind(this);
+
+        notification.config({
+            placement: 'topRight',
+            top: 70,
+            duration: 3,
+        });
     }
 
     loadCurrentUser() {
-        // this.setState({
-        //     isLoading: true
-        // });
-        // getCurrentUser()
-        //     .then(response => {
-        //         this.setState({
-        //             currentUser: response,
-        //             isAuthenticated: true,
-        //             isLoading: false
-        //         });
-        //     }).catch(error => {
-        //     this.setState({
-        //         isLoading: false
-        //     });
-        // });
+        this.setState({
+            isLoading: true
+        });
+        getCurrentUser()
+            .then(response => {
+                this.setState({
+                    currentUser: response,
+                    isAuthenticated: true,
+                    isLoading: false
+                });
+            }).catch(error => {
+            this.setState({
+                isLoading: false
+            });
+        });
     }
 
     componentDidMount() {
@@ -82,11 +88,33 @@ class App extends Component {
         }
         return (
             <Layout className="app-container">
-                <AppHeader/>
+                <AppHeader isAuthenticated={this.state.isAuthenticated}
+                           currentUser={this.state.currentUser}
+                           onLogout={this.handleLogout} />
+
+                <Content className="app-content">
+                    <div className="container">
+                        <Switch>
+                            <Route exact path="/"
+                                   render={(props) => <PollList isAuthenticated={this.state.isAuthenticated}
+                                                                currentUser={this.state.currentUser}
+                                                                handleLogout={this.handleLogout} {...props} />}>
+                            </Route>
+                            <Route path="/login"
+                                   render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
+                            <Route path="/signup" component={Signup}></Route>
+                            <Route path="/users/:username"
+                                   render={(props) => <Profile isAuthenticated={this.state.isAuthenticated}
+                                                               currentUser={this.state.currentUser} {...props}  />}>
+                            </Route>
+                            <PrivateRoute authenticated={this.state.isAuthenticated} path="/poll/new" component={NewPoll} handleLogout={this.handleLogout}></PrivateRoute>
+                            <Route component={NotFound}></Route>
+                        </Switch>
+                    </div>
+                </Content>
             </Layout>
         );
     }
 }
 
-// export default withRouter(App);
-export default App;
+export default withRouter(App);
