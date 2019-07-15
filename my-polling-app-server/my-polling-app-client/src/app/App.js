@@ -13,6 +13,7 @@ import {getCurrentUser} from "../util/APIUtils";
 import PrivateRoute from "../common/PrivateRoute";
 import NewPoll from "../poll/NewPoll";
 import Signup from "../user/signup/Signup";
+import Profile from "../user/profile/Profile";
 
 const {Content} = Layout;
 
