@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
-import {
-    Link,
-    withRouter
-} from 'react-router-dom';
-// import './AppHeader.css';
+import {Link, withRouter} from 'react-router-dom';
+import './AppHeader.css';
 import pollIcon from '../poll.svg';
-import {Layout, Menu, Dropdown, Icon} from 'antd';
+import {Dropdown, Icon, Layout, Menu} from 'antd';
 
 const Header = Layout.Header;
 
@@ -36,9 +33,9 @@ class AppHeader extends Component {
                     </Link>
                 </Menu.Item>,
                 <Menu.Item key="/profile" className="profile-menu">
-                    {/*<ProfileDropdownMenu */}
-                    {/*  currentUser={this.props.currentUser} */}
-                    {/*  handleMenuClick={this.handleMenuClick}/>*/}
+                    <ProfileDropdownMenu
+                        currentUser={this.props.currentUser}
+                        handleMenuClick={this.handleMenuClick}/>
                 </Menu.Item>
             ];
         } else {
@@ -55,16 +52,17 @@ class AppHeader extends Component {
         return (
             <Header className="app-header">
                 <div className="container">
-                  {/*<div className="app-title" >*/}
-                  {/*  <Link to="/">Polling App</Link>*/}
-                  {/*</div>*/}
-                {/*  <Menu*/}
-                {/*    className="app-menu"*/}
-                {/*    mode="horizontal"*/}
-                {/*    // selectedKeys={[this.props.location.pathname]}*/}
-                {/*    style={{ lineHeight: '64px' }} >*/}
-                {/*      {menuItems}*/}
-                {/*  </Menu>*/}
+                    <div className="app-title">
+                        <Link to="/">Polling App</Link>
+                    </div>
+                    <Menu
+                        className="app-menu"
+                        mode="horizontal"
+                        selectedKeys={[this.props.location.pathname]}
+                        style={{lineHeight: '64px'}}
+                    >
+                        {menuItems}
+                    </Menu>
                 </div>
             </Header>
         );
@@ -104,5 +102,4 @@ function ProfileDropdownMenu(props) {
     );
 }
 
-
-export default AppHeader;
+export default withRouter(AppHeader);
