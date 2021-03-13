@@ -16,7 +16,7 @@ spec:
     spec:                     # Spec for the containers that will be run in the Pods
       containers:
       - name: polling-app-server
-        image: kenshin579/advenoh:polling-app-server:latest
+        image: kenshin579/advenoh:polling-app-server
         imagePullPolicy: IfNotPresent
         ports:
           - name: http
