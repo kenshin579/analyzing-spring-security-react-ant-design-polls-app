@@ -17,7 +17,7 @@ spec:
       containers:
       - name: polling-app-server
         image: kenshin579/advenoh:polling-app-server
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
           - name: http
             containerPort: 8080 # The port that the container exposes
