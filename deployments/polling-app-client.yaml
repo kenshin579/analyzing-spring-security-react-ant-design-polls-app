@@ -15,10 +15,14 @@ spec:
       containers:
       - name: polling-app-client
         image: kenshin579/advenoh:polling-app-client
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
           - name: http
             containerPort: 80   # Should match the Port that the container listens on
+#        envFrom:
+#          # The ConfigMap we want to use
+#          - configMapRef:
+#              name: polling-client-configmap
         resources:
           limits:
             cpu: 0.2

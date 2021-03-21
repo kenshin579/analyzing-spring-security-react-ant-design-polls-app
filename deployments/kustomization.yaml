@@ -1,3 +1,4 @@
+# todo : 이걸로 하면 잘 안됨 - 다시 확인이 필요함
 # The secrets file should not be checked into Git. It's published only for demonstration purpose.
 secretGenerator:
 - name: mysql-root-pass
