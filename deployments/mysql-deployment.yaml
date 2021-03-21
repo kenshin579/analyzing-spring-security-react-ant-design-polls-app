@@ -64,27 +64,31 @@ spec:
       containers:
       - image: mysql:5.7            # The container image
         name: mysql
-        env:                        # Environment variables passed to the container 
-        - name: MYSQL_ROOT_PASSWORD 
-          valueFrom:                # Read environment variables from kubernetes secrets
-            secretKeyRef:
-              name: mysql-root-pass
-              key: password
-        - name: MYSQL_DATABASE
-          valueFrom:
-            secretKeyRef:
-              name: mysql-db-url
-              key: database
-        - name: MYSQL_USER
-          valueFrom:
-            secretKeyRef:
-              name: mysql-user-pass
-              key: username
-        - name: MYSQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-user-pass
-              key: password
+        envFrom: # Environment variables passed to the container
+          - secretRef: # Read environment variables from kubernetes secrets
+              name: polling-mysql-secret
+
+#        env:                        # Environment variables passed to the container
+#        - name: MYSQL_ROOT_PASSWORD
+#          valueFrom:                # Read environment variables from kubernetes secrets
+#            secretKeyRef:
+#              name: mysql-root-pass
+#              key: password
+#        - name: MYSQL_DATABASE
+#          valueFrom:
+#            secretKeyRef:
+#              name: mysql-db-url
+#              key: database
+#        - name: MYSQL_USER
+#          valueFrom:
+#            secretKeyRef:
+#              name: mysql-user-pass
+#              key: username
+#        - name: MYSQL_PASSWORD
+#          valueFrom:
+#            secretKeyRef:
+#              name: mysql-user-pass
+#              key: password
         ports:
         - containerPort: 3306        # The port that the container exposes       
           name: mysql
